@@ -121,16 +121,17 @@ local modkey1      = "Control"
 
 -- personal variables
 --change these variables if you want
+local terminal          = os.getenv("TERMINAL") or "st"
+local terminal2         = os.getenv("TERMINAL") .. " -e bash" or "st -e bash"
 local browser1          = os.getenv("BROWSER") or "firefox"
 local browser2          = "firefox"
-local browser3          = "firefox"
+local browser3          = "brave"
 local editor            = os.getenv("EDITOR") or "nano"
-local editorgui         = "codium"
-local filemanager       = "thunar"
-local mailclient        = "thunderbird"
+local editorgui         = os.getenv("VISUAL") or "codium"
+local filemanager       = os.getenv("FILES_VISUAL") or "thunar"
+local filemanagercli    = os.getenv("FILES_VISUAL") or terminal .." -e ranger"
+local mailclient        = os.getenv("EMAIL") or "thunderbird"
 local mediaplayer       = "vlc"
-local terminal          = "st"
-local terminal2         = "st -e bash"
 local virtualmachine    = "virtualbox"
 local vi_focus     = false -- vi-like client focus - https://github.com/lcpz/awesome-copycats/issues/275
 local cycle_prev   = true -- cycle trough all previous client or just the first -- https://github.com/lcpz/awesome-copycats/issues/274
@@ -139,7 +140,7 @@ local cycle_prev   = true -- cycle trough all previous client or just the first 
 -- awesome variables
 awful.util.terminal = terminal
 --awful.util.tagnames = {  "➊", "➋", "➌", "➍", "➎", "➏", "➐", "➑", "➒", "➓" }
-awful.util.tagnames = { "", "", "", "", "", "","","","","" }
+awful.util.tagnames = { "", "", "", "", "", "","","","" }
 awful.util.terminal = terminal
 awful.layout.layouts = {
     awful.layout.suit.tile,
@@ -283,7 +284,9 @@ screen.connect_signal("arrange", function (s)
     end
 end)
 -- Create a wibox for each screen and add it
-awful.screen.connect_for_each_screen(function(s) beautiful.at_screen_connect(s) end)
+awful.screen.connect_for_each_screen(function(s) 
+    beautiful.at_screen_connect(s)
+end)
 -- }}}
 
 -- {{{ Mouse bindings
@@ -316,40 +319,40 @@ globalkeys = my_table.join(
 
 
     -- super + ... function keys
-    awful.key({ modkey }, "F1", function () awful.util.spawn( browser2 ) end,
-        {description = browser2, group = "function keys"}),
-    awful.key({ modkey }, "F2", function () awful.util.spawn( editorgui ) end,
-        {description = editorgui , group = "function keys" }),
-    awful.key({ modkey }, "F3", function () awful.util.spawn( "inkscape" ) end,
-        {description = "inkscape" ,wgroup = "function keys" }),
-    awful.key({ modkey }, "F4", function () awful.util.spawn( "gimp" ) end,
-        {description = "gimp" , group = "function keys" }),
-    awful.key({ modkey }, "F5", function () awful.util.spawn( "meld" ) end,
-        {description = "meld" , group = "function keys" }),
-    awful.key({ modkey }, "F6", function () awful.util.spawn( "vlc --video-on-top" ) end,
-        {description = "vlc" , group = "function keys" }),
-    awful.key({ modkey }, "F7", function () awful.util.spawn( "virtualbox" ) end,
-        {description = virtualmachine , group = "function keys" }),
-    awful.key({ modkey }, "F8", function () awful.util.spawn( filemanager ) end,
-        {description = filemanager , group = "function keys" }),
-    awful.key({ modkey }, "F9", function () awful.util.spawn( mailclient ) end,
-        {description = mailclient , group = "function keys" }),
-    awful.key({ modkey }, "F10", function () awful.util.spawn( mediaplayer ) end,
-        {description = mediaplayer , group = "function keys" }),
-    awful.key({ modkey }, "F11", function () awful.util.spawn( "rofi -show run -fullscreen" ) end,
-        {description = "rofi fullscreen" , group = "function keys" }),
-    awful.key({ modkey }, "F12", function () awful.util.spawn( "rofi -show run" ) end,
-        {description = "rofi" , group = "function keys" }),
+    -- awful.key({ modkey }, "F1", function () awful.util.spawn( browser2 ) end,
+    --     {description = browser2, group = "function keys"}),
+    -- awful.key({ modkey }, "F2", function () awful.util.spawn( editorgui ) end,
+    --     {description = editorgui , group = "function keys" }),
+    -- awful.key({ modkey }, "F3", function () awful.util.spawn( "inkscape" ) end,
+    --     {description = "inkscape" ,wgroup = "function keys" }),
+    -- awful.key({ modkey }, "F4", function () awful.util.spawn( "gimp" ) end,
+    --     {description = "gimp" , group = "function keys" }),
+    -- awful.key({ modkey }, "F5", function () awful.util.spawn( "meld" ) end,
+    --     {description = "meld" , group = "function keys" }),
+    -- awful.key({ modkey }, "F6", function () awful.util.spawn( "vlc --video-on-top" ) end,
+    --     {description = "vlc" , group = "function keys" }),
+    -- awful.key({ modkey }, "F7", function () awful.util.spawn( "virtualbox" ) end,
+    --     {description = virtualmachine , group = "function keys" }),
+    -- awful.key({ modkey }, "F8", function () awful.util.spawn( filemanager ) end,
+    --     {description = filemanager , group = "function keys" }),
+    -- awful.key({ modkey }, "F9", function () awful.util.spawn( mailclient ) end,
+    --     {description = mailclient , group = "function keys" }),
+    -- awful.key({ modkey }, "F10", function () awful.util.spawn( mediaplayer ) end,
+    --     {description = mediaplayer , group = "function keys" }),
+    -- awful.key({ modkey }, "F11", function () awful.util.spawn( "rofi -show run -fullscreen" ) end,
+    --     {description = "rofi fullscreen" , group = "function keys" }),
+    -- awful.key({ modkey }, "F12", function () awful.util.spawn( "rofi -show run" ) end,
+    --     {description = "rofi" , group = "function keys" }),
 
     -- super + ...
-    awful.key({ modkey }, "c", function () awful.util.spawn( "conky-toggle" ) end,
-        {description = "conky-toggle", group = "super"}),
+    -- awful.key({ modkey }, "c", function () awful.util.spawn( "conky-toggle" ) end,
+    --     {description = "conky-toggle", group = "super"}),
     awful.key({ modkey }, "e", function () awful.util.spawn( editorgui ) end,
         {description = "run gui editor", group = "super"}),
-    awful.key({ modkey }, "h", function () awful.util.spawn( "urxvt -T 'htop task manager' -e htop" ) end,
-        {description = "htop", group = "super"}),
-    awful.key({ modkey }, "r", function () awful.util.spawn( "rofi-theme-selector" ) end,
-        {description = "rofi theme selector", group = "super"}),
+    -- awful.key({ modkey }, "h", function () awful.util.spawn( "urxvt -T 'htop task manager' -e htop" ) end,
+    --     {description = "htop", group = "super"}),
+    -- awful.key({ modkey }, "r", function () awful.util.spawn( "rofi-theme-selector" ) end,
+    --     {description = "rofi theme selector", group = "super"}),
     awful.key({ modkey }, "t", function () awful.util.spawn( terminal2 ) end,
         {description = "terminal", group = "super"}),
     awful.key({ modkey }, "v", function () awful.util.spawn( "pavucontrol" ) end,
@@ -358,8 +361,8 @@ globalkeys = my_table.join(
           {description = "run prompt", group = "super"}),
     awful.key({ modkey }, "x",  function () awful.util.spawn( "arcolinux-logout" ) end,
       {description = "exit", group = "hotkeys"}),
-    awful.key({ modkey }, "Escape", function () awful.util.spawn( "xkill" ) end,
-        {description = "Kill proces", group = "hotkeys"}),
+    -- awful.key({ modkey }, "Escape", function () awful.util.spawn( "xkill" ) end,
+    --     {description = "Kill proces", group = "hotkeys"}),
 
     -- super + shift + ...
     awful.key({ modkey, "Shift"   }, "Return", function() awful.util.spawn( filemanager ) end),
@@ -444,12 +447,12 @@ globalkeys = my_table.join(
     --     {description = "Xfce appfinder", group = "altkey"}),
 
     -- screenshots
-    awful.key({ }, "Print", function () awful.util.spawn("scrot 'ArcoLinux-%Y-%m-%d-%s_screenshot_$wx$h.jpg' -e 'mv $f $$(xdg-user-dir PICTURES)'") end,
+    awful.key({ }, "Print", function () awful.util.spawn("scrot 'ZenCARS-%Y-%m-%d-%s_screenshot_$wx$h.jpg' -e 'mv $f $$(xdg-user-dir PICTURES)'") end,
         {description = "Scrot", group = "screenshots"}),
     awful.key({ modkey1           }, "Print", function () awful.util.spawn( "xfce4-screenshooter" ) end,
         {description = "Xfce screenshot", group = "screenshots"}),
-    awful.key({ modkey1, "Shift"  }, "Print", function() awful.util.spawn("gnome-screenshot -i") end,
-        {description = "Gnome screenshot", group = "screenshots"}),
+    -- awful.key({ modkey1, "Shift"  }, "Print", function() awful.util.spawn("gnome-screenshot -i") end,
+    --     {description = "Gnome screenshot", group = "screenshots"}),
 
     -- Personal keybindings}}}
 
@@ -460,18 +463,18 @@ globalkeys = my_table.join(
         {description = "show help", group="awesome"}),
 
     -- Tag browsing with modkey
-    awful.key({ modkey,           }, "Left",   awful.tag.viewprev,
-        {description = "view previous", group = "tag"}),
-    awful.key({ modkey,           }, "Right",  awful.tag.viewnext,
-        {description = "view next", group = "tag"}),
-    awful.key({ altkey,           }, "Escape", awful.tag.history.restore,
-        {description = "go back", group = "tag"}),
+    -- awful.key({ modkey,           }, "Left",   awful.tag.viewprev,
+    --     {description = "view previous", group = "tag"}),
+    -- awful.key({ modkey,           }, "Right",  awful.tag.viewnext,
+    --     {description = "view next", group = "tag"}),
+    -- awful.key({ altkey,           }, "Escape", awful.tag.history.restore,
+    --     {description = "go back", group = "tag"}),
 
      -- Tag browsing alt + tab
-    awful.key({ altkey,           }, "Tab",   awful.tag.viewnext,
-        {description = "view next", group = "tag"}),
-    awful.key({ altkey, "Shift"   }, "Tab",  awful.tag.viewprev,
-        {description = "view previous", group = "tag"}),
+    -- awful.key({ altkey,           }, "Tab",   awful.tag.viewnext,
+    --     {description = "view next", group = "tag"}),
+    -- awful.key({ altkey, "Shift"   }, "Tab",  awful.tag.viewprev,
+    --     {description = "view previous", group = "tag"}),
 
      -- Tag browsing modkey + tab
     awful.key({ modkey,           }, "Tab",   awful.tag.viewnext,
@@ -528,25 +531,25 @@ globalkeys = my_table.join(
 
 
         -- By direction client focus with arrows
-        awful.key({ modkey1, modkey }, "Down",
+        awful.key({ modkey }, "Down",
             function()
                 awful.client.focus.global_bydirection("down")
                 if client.focus then client.focus:raise() end
             end,
             {description = "focus down", group = "client"}),
-        awful.key({ modkey1, modkey }, "Up",
+        awful.key({ modkey }, "Up",
             function()
                 awful.client.focus.global_bydirection("up")
                 if client.focus then client.focus:raise() end
             end,
             {description = "focus up", group = "client"}),
-        awful.key({ modkey1, modkey }, "Left",
+        awful.key({ modkey }, "Left",
             function()
                 awful.client.focus.global_bydirection("left")
                 if client.focus then client.focus:raise() end
             end,
             {description = "focus left", group = "client"}),
-        awful.key({ modkey1, modkey }, "Right",
+        awful.key({ modkey }, "Right",
             function()
                 awful.client.focus.global_bydirection("right")
                 if client.focus then client.focus:raise() end
@@ -594,14 +597,6 @@ globalkeys = my_table.join(
     awful.key({ modkey }, "KP_Subtract", function ()
     awful.screen.focused().systray.visible = not awful.screen.focused().systray.visible
     end, {description = "Toggle systray visibility", group = "awesome"}),
-
-
-
-    -- On the fly useless gaps change
-    awful.key({ altkey, "Control" }, "j", function () lain.util.useless_gaps_resize(1) end,
-              {description = "increment useless gaps", group = "tag"}),
-    awful.key({ altkey, "Control" }, "l", function () lain.util.useless_gaps_resize(-1) end,
-              {description = "decrement useless gaps", group = "tag"}),
 
     -- Dynamic tagging
     awful.key({ modkey, "Shift" }, "n", function () lain.util.add_tag() end,
@@ -886,7 +881,10 @@ clientbuttons = gears.table.join(
     awful.button({ modkey }, 3, function (c)
         c:emit_signal("request::activate", "mouse_click", {raise = true})
         awful.mouse.client.resize(c)
-    end)
+    end),
+
+    awful.button({ modkey, "Shift" }, 4, function () lain.util.useless_gaps_resize(1) end),
+    awful.button({ modkey, "Shift" }, 5, function () lain.util.useless_gaps_resize(-1) end)
 )
 
 -- Set keys

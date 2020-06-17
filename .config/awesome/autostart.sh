@@ -39,3 +39,5 @@ run "volumeicon"
 #run "ckb-next -b"
 #run "discord"
 #run "telegram-desktop"
+
+xset r rate 300 50 &
